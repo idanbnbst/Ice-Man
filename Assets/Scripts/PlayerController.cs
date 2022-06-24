@@ -6,14 +6,18 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     bool canMove = true, isReversed = false, objectOnGround = false;
+
+    [Header("Player Mechanics")]
     [SerializeField] float torqueAmount = 20f;
+    [SerializeField] float baseSpeed = 20f;
+    [SerializeField] float boostSpeed = 30f;
+    [SerializeField] float jumpForce = 100f;
+
+    [Header("Reverse Params")]
     [SerializeField] float maxCoolDownTimer = 1f;
     [SerializeField] float reverseDelaySeconds = 1f;
     float coolDownTimer;
-    [SerializeField] float baseSpeed = 20f;
-    [SerializeField] float boostSpeed = 30f;
     // [SerializeField] float flipAmount = 200f;
-    [SerializeField] float jumpForce = 100f;
     Rigidbody2D playerRG2D;
     SurfaceEffector2D surfaceEffector2D;
     void Start()
