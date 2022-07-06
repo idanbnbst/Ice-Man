@@ -7694,8 +7694,8 @@ MonoBehaviour:
   baseSpeed: 20
   boostSpeed: 35
   jumpForce: 20
-  maxCoolDownTimer: 1
   reverseDelaySeconds: 1
+  reverseForceScale: 1
 --- !u!114 &1361787031
 MonoBehaviour:
   m_ObjectHideFlags: 0

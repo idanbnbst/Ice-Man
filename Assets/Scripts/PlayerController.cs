@@ -14,8 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 20f;
 
     [Header("Reverse Params")]
-    [SerializeField] float maxCoolDownTimer = 1f;
     [SerializeField] float reverseDelaySeconds = 1f;
+    [SerializeField] float reverseForceScale = 1f;
     float coolDownTimer;
     // [SerializeField] float flipAmount = 200f;
     Rigidbody2D playerRG2D;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             playerRG2D.transform.Rotate(new Vector3(0, 180, 0)); // Flip object
             setIsReverse();
             StartCoroutine(reverseForceAffect());
-            coolDownTimer = maxCoolDownTimer;
+            coolDownTimer = reverseDelaySeconds;
         }
         // else if (Input.GetKey(KeyCode.UpArrow))
         //     playerRG2D.transform.Rotate(new Vector3(-flipAmount * Time.deltaTime, 0, 0));
@@ -80,8 +80,8 @@ public class PlayerController : MonoBehaviour
     {
         surfaceEffector2D.forceScale = 0.02f;
         yield return new WaitForSeconds(reverseDelaySeconds);
-        surfaceEffector2D.speed *= -1;
-        surfaceEffector2D.forceScale = 1;
+        surfaceEffector2D.speed *= -1f;
+        surfaceEffector2D.forceScale = 1f;
     }
     void BoostPlayer()
     {
@@ -94,16 +94,16 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.tag != "Ground")
+            return;
         if (!objectOnGround)
-        {
             objectOnGround = true;
-        }
     }
     void OnCollisionExit2D(Collision2D other)
     {
+        if (other.gameObject.tag != "Ground")
+            return;
         if (objectOnGround)
-        {
             objectOnGround = false;
-        }
     }
 }
