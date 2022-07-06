@@ -7690,10 +7690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc9129b4b347a04594f658d8fb0cb71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torqueAmount: 15
+  torqueAmount: 17
   baseSpeed: 20
-  boostSpeed: 30
-  jumpForce: 100
+  boostSpeed: 35
+  jumpForce: 20
   maxCoolDownTimer: 1
   reverseDelaySeconds: 1
 --- !u!114 &1361787031

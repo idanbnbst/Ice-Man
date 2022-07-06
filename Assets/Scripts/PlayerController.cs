@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float torqueAmount = 20f;
     [SerializeField] float baseSpeed = 20f;
     [SerializeField] float boostSpeed = 30f;
-    [SerializeField] float jumpForce = 100f;
+    [SerializeField] float jumpForce = 20f;
 
     [Header("Reverse Params")]
     [SerializeField] float maxCoolDownTimer = 1f;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            playerRG2D.transform.Translate(new Vector3(0, jumpForce * Time.deltaTime, 0));
+            playerRG2D.velocity += new Vector2(0f, jumpForce);
     }
 
     void setIsReverse()
@@ -74,9 +74,11 @@ public class PlayerController : MonoBehaviour
             isReversed = false;
     }
 
+    // This functions returns an IEnumerator, means we can call it with StartCoroutine(f)
+    // and the function will be able to be executed with delay by using yield retun new WaitForSeconds(float seconds)
     IEnumerator reverseForceAffect()
     {
-        surfaceEffector2D.forceScale = 0.05f;
+        surfaceEffector2D.forceScale = 0.02f;
         yield return new WaitForSeconds(reverseDelaySeconds);
         surfaceEffector2D.speed *= -1;
         surfaceEffector2D.forceScale = 1;
