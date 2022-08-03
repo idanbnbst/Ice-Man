@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    bool canMove = true, isReversed = false, objectOnGround = false;
+    bool canMove = true;
+    bool isOnGround = false;
+    bool isFlipped = false;
 
     [Header("Player Mechanics")]
     [SerializeField] float torqueAmount = 20f;
@@ -16,7 +18,6 @@ public class PlayerController : MonoBehaviour
     [Header("Reverse Params")]
     [SerializeField] float reverseDelayTime = 1f;
     float coolDownTimer;
-    // [SerializeField] float flipAmount = 200f;
     Rigidbody2D playerRG2D;
     SurfaceEffector2D surfaceEffector2D;
     void Start()
@@ -30,9 +31,11 @@ public class PlayerController : MonoBehaviour
         if (canMove)
         {
             RotatePlayer();
-            if (objectOnGround)
+
+            if (isOnGround)
                 Jump();
-            if (!isReversed)
+
+            if (!isFlipped)
                 BoostPlayer();
         }
     }
@@ -43,38 +46,45 @@ public class PlayerController : MonoBehaviour
     void RotatePlayer()
     {
         coolDownTimer -= Time.deltaTime;
+
         if (Input.GetKey(KeyCode.LeftArrow))
             playerRG2D.AddTorque(torqueAmount);
+
         else if (Input.GetKey(KeyCode.RightArrow))
             playerRG2D.AddTorque(-torqueAmount);
-        else if (Input.GetKey(KeyCode.DownArrow) && coolDownTimer < 0)
+
+        else if (Input.GetKey(KeyCode.DownArrow) && coolDownTimer <= 0)
         {
+            SetFlipState();
+            coolDownTimer = reverseDelayTime;
             playerRG2D.transform.Rotate(new Vector3(0, 180, 0)); // Flip object
             StartCoroutine(reverseForceAffect());
-            coolDownTimer = reverseDelayTime;
         }
-        // else if (Input.GetKey(KeyCode.UpArrow))
-        //     playerRG2D.transform.Rotate(new Vector3(-flipAmount * Time.deltaTime, 0, 0));
-        // else if (Input.GetKey(KeyCode.DownArrow))
-        //     playerRG2D.transform.Rotate(new Vector3(flipAmount * Time.deltaTime, 0, 0));
+    }
+    // This functions returns an IEnumerator, means we can call it with StartCoroutine(f)
+    // and the function will be executed with delay by yield return
+    IEnumerator reverseForceAffect()
+    {
+        surfaceEffector2D.forceScale = 0.02f;
+        yield return new WaitForSeconds(reverseDelayTime);
+        surfaceEffector2D.speed *= -1;
+        surfaceEffector2D.forceScale = 1f;
+    }
+
+    void SetFlipState()
+    {
+        if (isFlipped)
+            isFlipped = false;
+        else
+            isFlipped = true;
     }
     void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             playerRG2D.velocity += new Vector2(0f, jumpForce);
     }
-    // This functions returns an IEnumerator, means we can call it with StartCoroutine(f)
-    // and the function will be able to be executed with delay by using yield retun new WaitForSeconds(float seconds)
-    IEnumerator reverseForceAffect()
-    {
-        surfaceEffector2D.forceScale = 0.02f;
-        yield return new WaitForSeconds(reverseDelayTime);
-        surfaceEffector2D.speed *= -1f;
-        surfaceEffector2D.forceScale = 1f;
-    }
     void BoostPlayer()
     {
-        // Need to fix an issue when boost is enabled while reversed
         if (Input.GetKeyDown(KeyCode.B))
             surfaceEffector2D.speed = boostSpeed;
         else if (Input.GetKeyUp(KeyCode.B))
@@ -85,14 +95,14 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag != "Ground")
             return;
-        if (!objectOnGround)
-            objectOnGround = true;
+        if (!isOnGround)
+            isOnGround = true;
     }
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.tag != "Ground")
             return;
-        if (objectOnGround)
-            objectOnGround = false;
+        if (isOnGround)
+            isOnGround = false;
     }
 }
