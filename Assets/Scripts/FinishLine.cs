@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class FinishLine : MonoBehaviour
 {
-    [SerializeField] float reloadSceneDelay = 1f;
+    [SerializeField] float reloadSceneTime = 1f;
     [SerializeField] ParticleSystem finishEffect;
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && !other.GetComponent<CrashDetector>().isCrashed())
+        if (other.tag == "Player")
         {
             finishEffect.Play();
             GetComponent<AudioSource>().Play();
-            Invoke("ReloadScene", reloadSceneDelay);
+            Invoke("ReloadScene", reloadSceneTime);
         }
     }
     void ReloadScene()

@@ -6,12 +6,12 @@ public class SurfDetector : MonoBehaviour
 {
     [SerializeField] ParticleSystem surfEffect;
 
-    private void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Ground")
             surfEffect.Play();
     }
-    private void OnCollisionExit2D(Collision2D other)
+    void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.tag == "Ground")
             surfEffect.Stop();

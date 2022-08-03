@@ -31,10 +31,6 @@ public class CrashDetector : MonoBehaviour
             Invoke("ReloadScene", reloadSceneDelay);
         }
     }
-    public bool isCrashed()
-    {
-        return hasCrashed;
-    }
     void ReloadScene()
     {
         SceneManager.LoadScene(0);

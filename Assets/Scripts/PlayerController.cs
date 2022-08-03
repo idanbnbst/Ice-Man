@@ -14,8 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 20f;
 
     [Header("Reverse Params")]
-    [SerializeField] float reverseDelaySeconds = 1f;
-    [SerializeField] float reverseForceScale = 1f;
+    [SerializeField] float reverseDelayTime = 1f;
     float coolDownTimer;
     // [SerializeField] float flipAmount = 200f;
     Rigidbody2D playerRG2D;
@@ -51,9 +50,8 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.DownArrow) && coolDownTimer < 0)
         {
             playerRG2D.transform.Rotate(new Vector3(0, 180, 0)); // Flip object
-            setIsReverse();
             StartCoroutine(reverseForceAffect());
-            coolDownTimer = reverseDelaySeconds;
+            coolDownTimer = reverseDelayTime;
         }
         // else if (Input.GetKey(KeyCode.UpArrow))
         //     playerRG2D.transform.Rotate(new Vector3(-flipAmount * Time.deltaTime, 0, 0));
@@ -65,21 +63,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             playerRG2D.velocity += new Vector2(0f, jumpForce);
     }
-
-    void setIsReverse()
-    {
-        if (!isReversed)
-            isReversed = true;
-        else
-            isReversed = false;
-    }
-
     // This functions returns an IEnumerator, means we can call it with StartCoroutine(f)
     // and the function will be able to be executed with delay by using yield retun new WaitForSeconds(float seconds)
     IEnumerator reverseForceAffect()
     {
         surfaceEffector2D.forceScale = 0.02f;
-        yield return new WaitForSeconds(reverseDelaySeconds);
+        yield return new WaitForSeconds(reverseDelayTime);
         surfaceEffector2D.speed *= -1f;
         surfaceEffector2D.forceScale = 1f;
     }

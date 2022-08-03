@@ -6633,7 +6633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7203bafed3b44e44e8518dac178136dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reloadSceneDelay: 1
+  reloadSceneTime: 1
   finishEffect: {fileID: 501422302}
 --- !u!61 &748870997
 BoxCollider2D:
@@ -7694,8 +7694,7 @@ MonoBehaviour:
   baseSpeed: 20
   boostSpeed: 35
   jumpForce: 20
-  reverseDelaySeconds: 1
-  reverseForceScale: 1
+  reverseDelayTime: 1
 --- !u!114 &1361787031
 MonoBehaviour:
   m_ObjectHideFlags: 0
