@@ -13,7 +13,7 @@ public class CrashDetector : MonoBehaviour
     because the player's collision happens as soon as he touches the ground.
     We can bypass this by setting a new collider (e.g. for player's head).
     The new collider must be used as a Trigger (Is Trigger = true).
-    Then we can use OnTriggerEnter2D to decide what object the player collided at (e.g. the Ground)
+    Then we can use OnTriggerEnter2D to decide what object the player collided with (e.g. the Ground)
     */
     void OnTriggerEnter2D(Collider2D other)
     {
