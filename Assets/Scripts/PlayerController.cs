@@ -58,12 +58,12 @@ public class PlayerController : MonoBehaviour
             SetFlipState();
             coolDownTimer = reverseDelayTime;
             playerRG2D.transform.Rotate(new Vector3(0, 180, 0)); // Flip object
-            StartCoroutine(reverseForceAffect());
+            StartCoroutine(ReverseForceAffect());
         }
     }
     // This functions returns an IEnumerator, means we can call it with StartCoroutine(f)
     // and the function will be executed with delay by yield return
-    IEnumerator reverseForceAffect()
+    IEnumerator ReverseForceAffect()
     {
         surfaceEffector2D.forceScale = 0.02f;
         yield return new WaitForSeconds(reverseDelayTime);
