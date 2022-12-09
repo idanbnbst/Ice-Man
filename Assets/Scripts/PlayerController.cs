@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     bool canMove = true;
@@ -14,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float baseSpeed = 20f;
     [SerializeField] float boostSpeed = 30f;
     [SerializeField] float jumpForce = 20f;
-
     [Header("Reverse Params")]
     [SerializeField] float reverseDelayTime = 1f;
     float coolDownTimer;
@@ -70,7 +66,6 @@ public class PlayerController : MonoBehaviour
         surfaceEffector2D.speed *= -1;
         surfaceEffector2D.forceScale = 1f;
     }
-
     void SetFlipState()
     {
         if (isFlipped)
@@ -90,7 +85,6 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.B))
             surfaceEffector2D.speed = baseSpeed;
     }
-
     void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag != "Ground")
